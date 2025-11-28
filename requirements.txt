@@ -1,0 +1,7 @@
+py-cord==2.4.1
+flask
+python-dotenv
+google-generativeai
+yt-dlp
+requests
+beautifulsoup4
