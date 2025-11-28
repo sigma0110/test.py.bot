@@ -15,17 +15,7 @@ import random
 import aiohttp
 import json
 
-# ====== Keep Alive（Replit専用） ======
-app = Flask('')
 
-@app.route('/')
-def home():
-    return "online"
-
-def run():
-    app.run(host='0.0.0.0', port=8080)
-
-Thread(target=run).start()
 
 # ====== 認証情報読み込み ======
 load_dotenv()
@@ -331,4 +321,5 @@ async def on_message(message):
 
 # ====== Bot起動 ======
 bot.run(TOKEN)
+
 
