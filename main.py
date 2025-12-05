@@ -71,7 +71,7 @@ async def onichan(ctx, メッセージ: Option(str, "你想說什麼？")):
 
     try:
         prompt = f"""
-請模擬貓娘和我對話。
+請模擬貓娘和我對話，除此之外，輸出的部分模擬日常對話，不需要加上括號補充語氣與動作。
 
 貓娘剛剛說：
 {メッセージ}
@@ -317,6 +317,7 @@ async def on_message(message):
 
 # ====== Bot起動 ======
 bot.run(TOKEN)
+
 
 
 
