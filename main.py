@@ -22,7 +22,7 @@ WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 
 # ====== Gemini API 初期化 ======
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-2.0-flash")
 
 # ====== Discord Bot 初期化 ======
 intents = discord.Intents.default()
@@ -282,4 +282,5 @@ if __name__ == "__main__":
         bot.run(TOKEN)
     else:
         print("❌ 請設定 DISCORD_TOKEN 環境變數")
+
 
