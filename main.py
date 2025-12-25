@@ -22,7 +22,7 @@ WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 
 # ====== Gemini API 初期化 ======
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("models/gemini-1.5-flash")
 
 # ====== Discord Bot 初期化 ======
 intents = discord.Intents.default()
@@ -282,6 +282,39 @@ if __name__ == "__main__":
         bot.run(TOKEN)
     else:
         print("❌ 請設定 DISCORD_TOKEN 環境變數")
+
+
+# ====== スラッシュコマンド：檢查可用模型清單 ======
+@bot.slash_command(name="check_models", description="檢查目前 API Key 支援的所有模型清單")
+async def check_models(ctx):
+    await ctx.defer() # 避免 API 讀取過久導致逾時
+
+    try:
+        model_list = []
+        # 獲取所有支援 generateContent 的模型
+        for m in genai.list_models():
+            if 'generateContent' in m.supported_generation_methods:
+                # 簡化顯示，只取 models/ 後面的名稱
+                name = m.name.replace("models/", "")
+                model_list.append(f"• `{name}`")
+
+        if not model_list:
+            await ctx.respond("⚠️ 找不到任何支援產生內容的模型。請檢查 API Key 權限。")
+            return
+
+        # 組合顯示訊息
+        models_text = "\n".join(model_list)
+        response_msg = (
+            "📡 **系統清單：可用語言模組**\n"
+            "以下是您的 API Key 目前可調用的模型：\n\n"
+            f"{models_text}\n\n"
+            "💡 *建議：若發生 404 錯誤，請確保程式碼中的模型名稱與清單完全一致。*"
+        )
+        
+        await ctx.respond(response_msg)
+
+    except Exception as e:
+        await ctx.respond(f"⚠️ 無法讀取模型清單：\n```{e}```")
 
 
 
